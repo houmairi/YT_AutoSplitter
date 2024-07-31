@@ -1,3 +1,4 @@
+![Autosplitter](https://i.imgur.com/q78sAp2.png)
 # Auto YT Splitter
 
 Auto YT Splitter is a Python application designed to download YouTube videos and split them into parts of specified lengths. It features a GUI built with Tkinter, allowing users to easily manage and process their videos. 
