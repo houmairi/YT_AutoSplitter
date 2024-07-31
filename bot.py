@@ -1,13 +1,3 @@
-# Created by DIVINUS from Nulled
-# Date: 31/07/2024
-# Description: This is a simple python script that allows you to download a youtube video and split it into parts.
-# Version: 1.0
-# License: MIT
-# Requirements: moviepy, yt-dlp, tkinter
-# Usage: Run the script and enter the youtube video link, select the output folder, and the part length in seconds. Click the "Download & Split Video" button to start the process.
-# Credits: DIVINUS from Nulled
-# Help: DM me on Nulled if you need help with this script.
-# Note: This script is for educational purposes only. I am not responsible for any misuse of this script.
 import os
 import json
 import tkinter as tk
@@ -20,24 +10,6 @@ import re
 import threading
 import queue
 import logging
-
-
-diviArt = """
-████████▄   ▄█   ▄█    █▄   ▄█  ███▄▄▄▄   ███    █▄     ▄████████ 
-███   ▀███ ███  ███    ███ ███  ███▀▀▀██▄ ███    ███   ███    ███ 
-███    ███ ███▌ ███    ███ ███▌ ███   ███ ███    ███   ███    █▀  
-███    ███ ███▌ ███    ███ ███▌ ███   ███ ███    ███   ███        
-███    ███ ███▌ ███    ███ ███▌ ███   ███ ███    ███ ▀███████████ 
-███    ███ ███  ███    ███ ███  ███   ███ ███    ███          ███ 
-███   ▄███ ███  ███    ███ ███  ███   ███ ███    ███    ▄█    ███ 
-████████▀  █▀    ▀██████▀  █▀    ▀█   █▀  ████████▀   ▄████████▀  
-                                                                  
-                                                                  
-"""
-
-def print_startup_artwork():
-    print(diviArt)
-print_startup_artwork()
 
 
 CONFIG_FILE = 'config.json'
@@ -64,7 +36,7 @@ def clean_youtube_url(url):
 # download the vid in high format
 def download_youtube_video(url, output_path='video.mp4'):
     ydl_opts = {
-        'format': 'best',
+        'format': 'bestvideo+bestaudio/best*',  # This will pick the best available formats
         'outtmpl': output_path,
         'quiet': True
     }
@@ -139,7 +111,7 @@ def process_video():
     def background_task():
         try:
             ydl_opts = {
-                'format': 'best',
+                'format': 'bestvideo+bestaudio/best*',
                 'quiet': True,
                 'extract_flat': True,
             }
