@@ -47,7 +47,7 @@ pip install moviepy yt-dlp
    Simply run the Python script to start the application:
 
    ```bash
-   python main.py
+   python bot.py
 
 ## Usage
 
