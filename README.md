@@ -32,8 +32,8 @@ pip install moviepy yt-dlp
 1. **Clone the Repository:**
 
    ```bash
-   git clone https://github.com/yourusername/auto-yt-splitter.git
-   cd auto-yt-splitter
+   git clone https://github.com/hil2630/YT_AutoSplitter.git
+   cd YT_AutoSplitter
 
 
 2. **Install Dependencies:**
