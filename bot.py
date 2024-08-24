@@ -12,16 +12,21 @@ import queue
 import logging
 
 diviArt = """
-████████▄   ▄█   ▄█    █▄   ▄█  ███▄▄▄▄   ███    █▄     ▄████████ 
-███   ▀███ ███  ███    ███ ███  ███▀▀▀██▄ ███    ███   ███    ███ 
-███    ███ ███▌ ███    ███ ███▌ ███   ███ ███    ███   ███    █▀  
-███    ███ ███▌ ███    ███ ███▌ ███   ███ ███    ███   ███        
-███    ███ ███▌ ███    ███ ███▌ ███   ███ ███    ███ ▀███████████ 
-███    ███ ███  ███    ███ ███  ███   ███ ███    ███          ███ 
-███   ▄███ ███  ███    ███ ███  ███   ███ ███    ███    ▄█    ███ 
-████████▀  █▀    ▀██████▀  █▀    ▀█   █▀  ████████▀   ▄████████▀  
-                                                                  
-                                                                  
+              .-'''-.                                                   
+             '   _    \                                                 
+   .       /   /` '.   \       __  __   ___            .--.        .--. 
+ .'|      .   |     \  '      |  |/  `.'   `.          |__|        |__| 
+<  |      |   '      |  '     |   .-.  .-.   '         .--..-,.--. .--. 
+ | |      \    \     / /      |  |  |  |  |  |    __   |  ||  .-. ||  | 
+ | | .'''-.`.   ` ..' /_    _ |  |  |  |  |  | .:--.'. |  || |  | ||  | 
+ | |/.'''. \  '-...-'`| '  / ||  |  |  |  |  |/ |   \ ||  || |  | ||  | 
+ |  /    | |         .' | .' ||  |  |  |  |  |`" __ | ||  || |  '- |  | 
+ | |     | |         /  | /  ||__|  |__|  |__| .'.''| ||__|| |     |__| 
+ | |     | |        |   `'.  |                / /   | |_   | |          
+ | '.    | '.       '   .'|  '/               \ \._,\ '/   |_|          
+ '---'   '---'       `-'  `--'                 `--'  `"                 
+
+                                                               
 """
 
 def print_startup_artwork():
@@ -51,16 +56,18 @@ def clean_youtube_url(url):
     return url
 
 # download the vid in high format
-def download_youtube_video(url, output_path='video.mp4'):
+def download_youtube_video(url, output_path='video'):
     ydl_opts = {
-        'format': 'bestvideo+bestaudio/best*',  # This will pick the best available formats
-        'outtmpl': output_path,
+        'format': 'bestvideo+bestaudio/best',
+        'outtmpl': output_path + '.%(ext)s',
         'quiet': True
     }
     try:
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-            ydl.download([url])
-        log_and_print(f"Video downloaded successfully: {output_path}")
+            info = ydl.extract_info(url, download=True)
+            filename = ydl.prepare_filename(info)
+        log_and_print(f"Video downloaded successfully: {filename}")
+        return filename
     except yt_dlp.DownloadError as e:
         log_and_print(f"Error downloading video: {str(e)}", logging.ERROR)
         raise
@@ -143,9 +150,9 @@ def process_video():
             
             status_label.config(text="Downloading video...")
             root.update_idletasks()
-            video_path = os.path.join(video_folder, 'video.mp4')
+            video_path = os.path.join(video_folder, 'video')
             try:
-                download_youtube_video(youtube_url, output_path=video_path)
+                downloaded_file = download_youtube_video(youtube_url, output_path=video_path)
             except yt_dlp.DownloadError:
                 status_label.config(text="Try again, something went wrong with the video download.")
                 root.after(3000, clear_status)
@@ -156,7 +163,7 @@ def process_video():
             status_label.config(text="Splitting video into parts...")
             root.update_idletasks()
             
-            split_video(video_path, segment_length=part_length, output_folder=parts_folder, update_progress=update_progress)
+            split_video(downloaded_file, segment_length=part_length, output_folder=parts_folder, update_progress=update_progress)
             
             status_label.config(text="Video processed and saved successfully!")
             processing_image_label.config(image='')

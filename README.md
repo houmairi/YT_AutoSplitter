@@ -38,16 +38,13 @@ pip install moviepy yt-dlp
 
 2. **Install Dependencies:**
 
-   Make sure you have Python installed. Then install the necessary libraries:
+   Make sure you have Python and [https://ffmpeg.org/download.html#build-windows](FFMPEG) installed. Then install the necessary libraries:
 
    ```bash
    pip install moviepy yt-dlp
 
 3. **Run the Application:**
-   Simply run the Python script to start the application:
-
-   ```bash
-   python bot.py
+   Simply run YT_AutoSplitter.bat
 
 ## Usage
 
